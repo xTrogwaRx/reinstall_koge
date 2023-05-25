@@ -35,8 +35,17 @@ set version[3]={eaad089e-b385-4a7c-8143-dd31f3aca23d}
 set version[4]={164c8200-dcf9-4be1-ad0f-b4e1f1bd88d5}
 :: Версия 2.4.1
 set version[5]={b516ae86-bc4d-41f1-9212-3bdd23c6b1ca}
+:: Версия 2.5.2
+set version[6]={edcfee75-5b6c-4e26-b4c1-8d830b8adcfa}
+:: Версия 2.6.1
+set version[7]={15788722-d009-4062-bd41-0b482ab6ddfa}
 :: заглушка
-set version[6]=dummy
+set version[8]=dummy
+
+ver |>NUL find /v "5." && if "%~1"=="" (
+  Echo CreateObject^("Shell.Application"^).ShellExecute WScript.Arguments^(0^),"1","","runas",1 >"%~dp0Elevating.vbs"
+  cscript.exe //nologo "%~dp0Elevating.vbs" "%~f0"& goto :eof
+)
 
 openfiles > NUL 2>&1
 if NOT %ERRORLEVEL% EQU 0 (
@@ -87,10 +96,12 @@ if NOT %ERRORLEVEL% EQU 0 (
 :install_new
 	if exist "%~dp0SetupKoge.exe" (
 		echo Найден установщик SetupKoge.exe. Устанавливаю...
-		start /wait "" "%~dp0SetupKoge.exe" /quiet
+		start /wait "" "%~dp0SetupKoge.exe" /S
 		Color 27
+		del "%~dp0Elevating.vbs"
 	) else (
 		Color 60
+		del "%~dp0Elevating.vbs"
 	)
 	
 :end
