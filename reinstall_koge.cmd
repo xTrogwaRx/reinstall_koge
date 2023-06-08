@@ -39,8 +39,10 @@ set version[5]={b516ae86-bc4d-41f1-9212-3bdd23c6b1ca}
 set version[6]={edcfee75-5b6c-4e26-b4c1-8d830b8adcfa}
 :: Версия 2.6.1
 set version[7]={15788722-d009-4062-bd41-0b482ab6ddfa}
+:: Версия 2.7.1
+set version[8]={6d727c04-2734-4234-aeed-62d4c6c420e6}
 :: заглушка
-set version[8]=dummy
+set version[9]=dummy
 
 ver |>NUL find /v "5." && if "%~1"=="" (
   Echo CreateObject^("Shell.Application"^).ShellExecute WScript.Arguments^(0^),"1","","runas",1 >"%~dp0Elevating.vbs"
