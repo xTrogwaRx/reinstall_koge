@@ -77,10 +77,16 @@ echo.
 	echo Найдена %DisplayName% v.%InstalledVersion%. Удаляю...
 	start /wait "" "%UninstallString%" /uninstall /quiet
 	
+:get_timestamp
+	for /f "tokens=2 delims==" %%a in ('wmic OS Get localdatetime /value') do set "dt=%%a"
+	set "YY=%dt:~2,2%" & set "YYYY=%dt:~0,4%" & set "MM=%dt:~4,2%" & set "DD=%dt:~6,2%"
+	set "HH=%dt:~8,2%" & set "Min=%dt:~10,2%" & set "Sec=%dt:~12,2%"
+	set "timestamp=%YYYY%-%MM%-%DD%_%HH%-%Min%-%Sec%"
+	
 :clear_data
 	if exist %APPDATA%\Koge	(
-		echo Удаляю APPDATA\Koge
-		@RD /S /Q "%APPDATA%\Koge"
+		echo Папка APPDATA\Koge найдена. Переименовываю...
+		ren "%APPDATA%\Koge" Koge_%timestamp%
 	) else (
 		echo Папка APPDATA\Koge не найдена
 	)
