@@ -90,6 +90,10 @@ echo.
 	) else (
 		echo Папка APPDATA\Koge не найдена
 	)
+	
+:clear
+del "%~dp0elevating.vbs"
+del "temp"
 
 :install_new
 	if exist "%~dp0SetupKoge.exe" (
@@ -104,31 +108,22 @@ echo.
 		goto end
 	)
 
-
 :start_promt
 	setlocal
-	set res=null
-	:promt
-	SET /P AREYOUSURE=Запустить "ОГЭ в компьютерной форме" после завершения скрипта? (Y/N)?
 
-	if /I "%AREYOUSURE%" == "N" set res=false
-	if /I "%AREYOUSURE%" == "Н" set res=false
-	if /I "%AREYOUSURE%" == "Y" set res=true
-	if /I "%AREYOUSURE%" == "Д" set res=true
+	echo *************************************
+	echo Выберите вариант продожения:
+	echo 1. Выключить компьютер
+	echo 2. Запустить ОГЭ в компьютерной форме 
 
-	if "%res%"=="false" ( 
-		GOTO end_promt
+	SET /P OPTION="Ваш выбор: " 
+
+	if "%OPTION%"=="1" ( 
+		shutdown /f /p
 	)
-	if not "%res%"=="true"  (
-		GOTO promt
+	if "%OPTION%"=="2"  (
+		start explorer.exe "C:\Users\Public\Desktop\ОГЭ в компьютерной форме.lnk"
 	)
-
-	start explorer.exe "C:\Users\Public\Desktop\ОГЭ в компьютерной форме.lnk"
-
-	:end_promt
 	endlocal
 	
-	
-:end
-del "%~dp0elevating.vbs"
-del "temp"
+:end	
